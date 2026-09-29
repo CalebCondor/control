@@ -23,7 +23,9 @@ export class UsersService {
     });
 
     if (existing) {
-      throw new ConflictException(`Email ${createUserDto.email} already registered`);
+      throw new ConflictException(
+        `Email ${createUserDto.email} already registered`,
+      );
     }
 
     const hashedPassword = await bcrypt.hash(createUserDto.password, 10);
@@ -54,11 +56,18 @@ export class UsersService {
   }
 
   async findByEmailWithPassword(email: string): Promise<User | null> {
-    return this.usersRepository
-      .createQueryBuilder('user')
-      .where('user.email = :email', { email })
-      .addSelect('user.password')
-      .getOne();
+    return this.usersRepository.findOne({
+      where: { email },
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        password: true,
+        isActive: true,
+        createdAt: true,
+        updatedAt: true,
+      },
+    });
   }
 
   async update(id: number, updateUserDto: UpdateUserDto): Promise<User> {
