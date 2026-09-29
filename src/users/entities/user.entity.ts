@@ -8,24 +8,24 @@ import {
 
 @Entity('users')
 export class User {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
+  @PrimaryGeneratedColumn()
+  id!: number;
 
   @Column({ type: 'varchar', length: 120 })
-  name: string;
+  name!: string;
 
   @Column({ type: 'varchar', length: 160, unique: true })
-  email: string;
+  email!: string;
 
   @Column({ type: 'varchar', length: 255 })
-  password: string;
+  password!: string;
 
   @Column({ type: 'boolean', default: true })
-  isActive: boolean;
+  isActive!: boolean;
 
   @CreateDateColumn()
-  createdAt: Date;
+  createdAt!: Date;
 
   @UpdateDateColumn()
-  updatedAt: Date;
+  updatedAt!: Date;
 }
